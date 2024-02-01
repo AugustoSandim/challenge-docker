@@ -4,14 +4,13 @@ FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
 
-# Download Go modules
-RUN go mod init example/hello
+# Initialize the module
+RUN go mod init hello
 
 # Copy the source code
 COPY ./hello.go .
 
-# Copy the source code. Note the slash at the end, as explained in
-# https://docs.docker.com/engine/reference/builder/#copy
+# Build the binary
 RUN CGO_ENABLED=0 GOOS=linux go build -o hello .
 
 FROM scratch
